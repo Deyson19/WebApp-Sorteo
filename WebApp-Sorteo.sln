@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp-Sorteo", "WebApp-Sorteo\WebApp-Sorteo.csproj", "{895F5F2E-30A0-44C6-89AE-E6097D34DFB1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{895F5F2E-30A0-44C6-89AE-E6097D34DFB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{895F5F2E-30A0-44C6-89AE-E6097D34DFB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{895F5F2E-30A0-44C6-89AE-E6097D34DFB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{895F5F2E-30A0-44C6-89AE-E6097D34DFB1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {606940F2-2FFA-4813-A6D1-15B9C67226F1}
+	EndGlobalSection
+EndGlobal

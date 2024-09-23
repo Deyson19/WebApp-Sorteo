@@ -1,0 +1,102 @@
+﻿@model WebApp_Sorteo.Models.Sorteo
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container mt-4">
+    <h1 class="text-center">Crear Sorteo</h1>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre del sorteo" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Descripcion" class="control-label"></label>
+                        <input asp-for="Descripcion" class="form-control" placeholder="Ingrese una descripción" />
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="FechaInicio" class="control-label"></label>
+                        <input asp-for="FechaInicio" type="date" class="form-control" />
+                        <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="FechaFin" class="control-label"></label>
+                        <input asp-for="FechaFin" type="date" class="form-control" />
+                        <span asp-validation-for="FechaFin" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Estado" class="control-label"></label>
+
+                        <select asp-for="Estado" class="form-control">
+                            <option value="">Seleccione un estado</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="Finalizado">Finalizado</option>
+                        </select>
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="CantidadTicketsTotales" class="control-label"></label>
+                        <input asp-for="CantidadTicketsTotales" type="number" min="0" class="form-control"
+                            placeholder="Cantidad total de tickets" />
+                        <span asp-validation-for="CantidadTicketsTotales" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="CantidadTicketsVendidos" class="control-label"></label>
+                        <input asp-for="CantidadTicketsVendidos" type="number" min="0" class="form-control"
+                            placeholder="Cantidad de tickets vendidos" />
+                        <span asp-validation-for="CantidadTicketsVendidos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="PrecioUnidad" class="control-label"></label>
+                        <input asp-for="PrecioUnidad" type="number" min="0" class="form-control"
+                               placeholder="Precio Unidad" />
+                        <span asp-validation-for="PrecioUnidad" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="PremioId" class="control-label"></label>
+                        <select asp-for="PremioId" class="form-control" asp-items="@ViewBag.PremioId">
+                            <option value="">Seleccione un premio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    <input type="submit" value="Crear Sorteo" class="btn btn-primary btn-block" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-3 text-center">
+        <a asp-action="Index">Volver a la lista</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

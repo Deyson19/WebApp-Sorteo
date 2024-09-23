@@ -1,0 +1,80 @@
+﻿@model WebApp_Sorteo.Models.Sorteo
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Sorteo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaInicio" class="control-label"></label>
+                <input asp-for="FechaInicio" class="form-control" />
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaFin" class="control-label"></label>
+                <input asp-for="FechaFin" class="form-control" />
+                <span asp-validation-for="FechaFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <select asp-for="Estado" class="form-control">
+                    <option value="">Seleccione un estado</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CantidadTicketsTotales" class="control-label"></label>
+                <input asp-for="CantidadTicketsTotales" class="form-control" />
+                <span asp-validation-for="CantidadTicketsTotales" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CantidadTicketsVendidos" class="control-label"></label>
+                <input asp-for="CantidadTicketsVendidos" class="form-control" />
+                <span asp-validation-for="CantidadTicketsVendidos" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="PrecioUnidad" class="control-label"></label>
+                <input asp-for="PrecioUnidad" type="number" min="0" class="form-control"
+                       placeholder="Precio Unidad" />
+                <span asp-validation-for="PrecioUnidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PremioId" class="control-label"></label>
+                <select asp-for="PremioId" class="form-control" asp-items="ViewBag.PremioId"></select>
+                <span asp-validation-for="PremioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
