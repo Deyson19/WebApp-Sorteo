@@ -4,6 +4,7 @@
     {
         public const string Exitosa = "Exitoso";
         public const string Error = "Mensaje de error";
+        public const string Info = "Mensaje de informacion";
         public const string RegistroGuardado = "Se ha guardado el registro";
         public const string RegistroEliminado = "Se ha eliminado el registro del sistema";
         public const string RegistroActualizado = "Los datos se han actualizado";
