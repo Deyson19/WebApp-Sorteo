@@ -4,13 +4,13 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1 class="text-center text-success d-flex justify-content-around">Editar datos del Premio</h1>
 
-<h4>Premio</h4>
+<h4>Premio: @Model.Descripcion</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+<div class="row shadow-md border-2">
+    <div class="col-6">
+        <form asp-action="Edit" id="formEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -25,20 +25,30 @@
             </div>
             <div class="form-group">
                 <label asp-for="Imagen" class="control-label"></label>
-                <input asp-for="Imagen" class="form-control" />
+                <input asp-for="Imagen" class="form-control" type="url" />
                 <span asp-validation-for="Imagen" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group d-flex justify-content-around my-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Guardar cambios
+                </button>
             </div>
         </form>
     </div>
-</div>
+    <div class="col-4 offset-2">
+        <img src="@Model.Imagen" class="img-fluid" />
+        <div class="d-flex text-center">
+            <a asp-action="Index" class="btn btn-md btn-info">
+                Volver
+                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
