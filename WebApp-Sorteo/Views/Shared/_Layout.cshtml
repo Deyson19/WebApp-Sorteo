@@ -17,6 +17,15 @@
         integrity="sha512-d0olNN35C6VLiulAobxYHZiXJmq+vl+BGIgAxQtD5+kqudro/xNMvv2yIHAciGHpExsIbKX3iLg+0B6d0k4+ZA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    @*SweetAlert2*@
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/datatables.net-bs4@2.1.7/css/dataTables.bootstrap4.min.css">
+
+    @* DataTable *@
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.min.css" />
+    @* Toastr *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp_Sorteo.styles.css" asp-append-version="true" />
@@ -56,13 +65,14 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <partial name="_Alerts" />
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - WebApp_Sorteo - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - WebApp - Sorteo - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -75,8 +85,47 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/fontawesome.min.js"
         integrity="sha512-C8qHv0HOaf4yoA7ISuuCTrsPX8qjolYTZyoFRKNA9dFKnxgzIHnYTOJhXQIt6zwpIFzCrRzUBuVgtC4e5K1nhA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js
+"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net@2.1.7/js/dataTables.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        const btnLogout = document.querySelector("#btnLogout") ?? undefined;
+
+        btnLogout.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (btnLogout) {
+                const myForm = btnLogout.closest("form");
+                Swal.fire({
+                    title: '¿Estás seguro de que deseas salir?',
+                    text: 'No podrás revertir esto',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        toastr.success("Se va a cerrar la sesión.")
+                        setTimeout(() => {
+                            myForm.submit();
+                        }, 1800)
+                    } else {
+                        toastr.success("Que bueno quedarse.", "", {
+                            "positionClass": "toast-top-center",
+                            "timeOut": "3000",
+                            "progressBar": true,
+                        })
+                    }
+                })
+            }
+        })
+    </script>
 </body>
 
 </html>
