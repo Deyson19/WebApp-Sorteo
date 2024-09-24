@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp_Sorteo.Data;
 using WebApp_Sorteo.Models;
+using WebApp_Sorteo.Helpers;
 
 namespace WebApp_Sorteo.Controllers
 {
@@ -130,6 +131,7 @@ namespace WebApp_Sorteo.Controllers
             {
                 return NotFound();
             }
+            TempData[DS.Exitosa] = "Se va a eliminar un registro";
 
             return View(premio);
         }
@@ -143,6 +145,7 @@ namespace WebApp_Sorteo.Controllers
             if (premio != null)
             {
                 _context.Premios.Remove(premio);
+                TempData[DS.Info] = "Se ha eliminado el registro.";
             }
 
             await _context.SaveChangesAsync();
