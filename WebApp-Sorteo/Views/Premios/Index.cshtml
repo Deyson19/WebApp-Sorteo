@@ -13,7 +13,7 @@
 </section>
 
 <div class="table-responsive">
-    <table class="table table-bordered table-hover table-inverse table-dark align-middle">
+    <table class="table table-bordered table-hover table-inverse table-dark align-middle" id="example">
         <thead class="table-dark text-capitalize text-center">
             <tr>
                 <th>
@@ -41,7 +41,7 @@
                     <td>
                         <img src="@item.Imagen" class="img-fluid rounded-top w-25 h-25" alt="@item.Descripcion" />
                     </td>
-                    <td>
+                    <td class="d-flex justify-content-evenly">
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-light">
                             <i class="fas fa-pencil text-primary"></i>
                             Editar
@@ -60,3 +60,19 @@
         </tbody>
     </table>
 </div>
+<script>
+    window.onload = function () {
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [15, 50, 100, 200, -1],
+                    [15, 50, 100, 200, "Todos"]
+                ]
+            });
+
+        });
+    }
+</script>
