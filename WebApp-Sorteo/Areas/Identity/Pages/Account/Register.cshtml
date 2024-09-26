@@ -1,64 +1,145 @@
 ﻿@page
+@using WebApp_Sorteo.Models.Helpers
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registro de Usuarios";
 }
+<style>
+    .bg-glass {
+        background-color: hsla(0, 0%, 100%, 0.9) !important;
+        backdrop-filter: saturate(200%) blur(25px);
+    }
+</style>
+<div class="container container-fluid">
+    <div class="card bg-glass shadow-lg border-5">
+        <div class="card-header">
+            <h1 class="card-title text-success text-center">@ViewData["Title"]</h1>
+        </div>
+        <div class="card-body px-4 py-5 px-md-5">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.Nombres" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input asp-for="Input.Nombres" class="form-control" autocomplete="username" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Nombres" class="text-danger"></span>
                         </div>
-                    </form>
-                }
-            }
-        </section>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.Apellidos" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input asp-for="Input.Apellidos" class="form-control" autocomplete="username" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Apellidos" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.Documento" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                <input asp-for="Input.Documento" class="form-control" autocomplete="username" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Documento" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.Email" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input asp-for="Input.Email" class="form-control" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.Direccion" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                <input asp-for="Input.Direccion" class="form-control" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Direccion" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.Pais" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                <input asp-for="Input.Pais" class="form-control" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Pais" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.Ciudad" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                <input asp-for="Input.Ciudad" class="form-control" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Ciudad" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                <input asp-for="Input.PhoneNumber" class="form-control" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.Password" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                            </div>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    @if (User.IsInRole(Roles.Role_Admin))
+                    {
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label asp-for="Input.Role" class="form-label">Rol</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                    <select class="form-select form-select-lg" asp-for="Input.Role" asp-items="@Model.Input.ListaRol">
+                                        <option value="">Seleccionar un rol</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrar</button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 
