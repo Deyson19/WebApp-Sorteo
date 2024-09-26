@@ -6,6 +6,7 @@ using WebApp_Sorteo.Models.Helpers;
 
 namespace WebApp_Sorteo.Controllers
 {
+    [Authorize(Roles= Roles.Role_Admin)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,7 +20,7 @@ namespace WebApp_Sorteo.Controllers
         {
             return View();
         }
-        [Authorize(Roles =Roles.Role_Admin)]
+        [Authorize(Roles = Roles.Role_Admin)]
         public IActionResult Privacy()
         {
             return View();
