@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApp_Sorteo.Data;
-using WebApp_Sorteo.Models;
 using WebApp_Sorteo.Helpers;
+using WebApp_Sorteo.Models;
 
 namespace WebApp_Sorteo.Controllers
 {
@@ -46,8 +46,6 @@ namespace WebApp_Sorteo.Controllers
         }
 
         // POST: Premios/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Descripcion,Valor,Imagen")] Premio premio)
@@ -77,9 +75,6 @@ namespace WebApp_Sorteo.Controllers
             return View(premio);
         }
 
-        // POST: Premios/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion,Valor,Imagen")] Premio premio)
@@ -131,7 +126,6 @@ namespace WebApp_Sorteo.Controllers
             return View(premio);
         }
 
-        // POST: Premios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
