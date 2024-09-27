@@ -1,57 +1,35 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WebApp_Sorteo.Helpers;
 using WebApp_Sorteo.Models;
 using WebApp_Sorteo.Models.Helpers;
 
 namespace WebApp_Sorteo.Data.Inicializador
 {
-    public class DbInicializador : IDbInicializador
+    public class DbInicializador(
+        ApplicationDbContext dbContext,
+        UserManager<IdentityUser> userManager,
+        RoleManager<IdentityRole> roleManager
+            ) : IDbInicializador
     {
-        //* Inyectar servicios 
         #region Servicios a inyectar
-        private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _dbContext = dbContext;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly RoleManager<IdentityRole> _roleManager = roleManager;
         private readonly string userName = "deyson19@mail.com";
+
         #endregion
-
-        public DbInicializador(
-            ApplicationDbContext dbContext,
-            UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager
-            )
+        public void MontarBaseDatos()
         {
-            _dbContext = dbContext;
-            _roleManager = roleManager;
-            _userManager = userManager;
-        }
-        public async Task MontarBaseDatos()
-        {
-            try
+            if (_dbContext.Database.GetPendingMigrations().Any())
             {
-                if (_dbContext.Database.GetPendingMigrations().Any())
-                {
-                    await _dbContext.Database.MigrateAsync();
-                    Console.WriteLine("Se han aplicado las migraciones");
-                }
+                _dbContext.Database.Migrate();
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            if (_dbContext.Roles.Any(x => x.Name == Roles.Role_Admin))
-            {
-                return;
-            }
-            else
-            {
-                await _roleManager.CreateAsync(new IdentityRole(Roles.Role_Admin));
-                await _roleManager.CreateAsync(new IdentityRole(Roles.Role_Cliente));
-                Console.WriteLine("Se han creado los roles");
-            }
+            if (_dbContext.Roles.Any(x => x.Name == Roles.Role_Admin)) return;
 
-            var result = await _userManager.CreateAsync(new Usuario
+            _roleManager.CreateAsync(new IdentityRole(Roles.Role_Admin)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(Roles.Role_Cliente)).GetAwaiter().GetResult();
+
+            _userManager.CreateAsync(new Usuario
             {
                 UserName = userName,
                 Email = userName,
@@ -64,29 +42,14 @@ namespace WebApp_Sorteo.Data.Inicializador
                 Pais = "Colombia",
                 Documento = "24257896"
 
-            }, "Admin.dey_20");
-            
-            if (result.Succeeded)
-            {
-                var usuarioAdmin = await _dbContext.Users.Where(x => x.UserName == userName).FirstOrDefaultAsync()!;
-                var roleResult = await _userManager.AddToRoleAsync(usuarioAdmin!, Roles.Role_Admin);
+            }, "Admin.dey_20").GetAwaiter().GetResult();
 
-                if (!roleResult.Succeeded)
-                {
-                    foreach (var error in roleResult.Errors)
-                    {
-                        Console.WriteLine(error.Description);
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("No fue posible crear el usuario");
-            }
+            var usuarioAdmin = _dbContext.Usuarios.Local.FirstOrDefault(x => x.UserName == userName);
+            _userManager.AddToRoleAsync(usuarioAdmin!, Roles.Role_Admin).GetAwaiter().GetResult();           
         }
     }
     public interface IDbInicializador
     {
-        Task MontarBaseDatos();
+        void MontarBaseDatos();
     }
 }
