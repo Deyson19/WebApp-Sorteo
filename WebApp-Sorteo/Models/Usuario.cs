@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApp_Sorteo.Models
 {
@@ -27,7 +28,7 @@ namespace WebApp_Sorteo.Models
         [Required(ErrorMessage = "{0} es requerido")]
         [MaxLength(60)]
         public required string Pais { get; set; }
+        [NotMapped]
         public string? Role { get; set; }
-        public IdentityRole Roles { get; set; }
     }
 }
