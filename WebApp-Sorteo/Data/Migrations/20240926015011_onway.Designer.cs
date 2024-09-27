@@ -12,8 +12,8 @@ using WebApp_Sorteo.Data;
 namespace WebApp_Sorteo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240919050130_PrecioTicket")]
-    partial class PrecioTicket
+    [Migration("20240926015011_onway")]
+    partial class onway
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -411,15 +411,6 @@ namespace WebApp_Sorteo.Data.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RolesId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("RolesId");
-
                     b.HasDiscriminator().HasValue("Usuario");
                 });
 
@@ -513,17 +504,6 @@ namespace WebApp_Sorteo.Data.Migrations
                     b.Navigation("Sorteo");
 
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("WebApp_Sorteo.Models.Usuario", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Roles")
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("WebApp_Sorteo.Models.Sorteo", b =>
