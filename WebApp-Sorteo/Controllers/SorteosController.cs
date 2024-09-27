@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp_Sorteo.Data;
-using WebApp_Sorteo.Helpers;
 using WebApp_Sorteo.Models;
 
 namespace WebApp_Sorteo.Controllers
@@ -15,15 +14,11 @@ namespace WebApp_Sorteo.Controllers
         {
             _context = context;
         }
-
-        // GET: Sorteos
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Sorteos.Include(s => s.Premio);
             return View(await applicationDbContext.ToListAsync());
         }
-
-        // GET: Sorteos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,16 +37,12 @@ namespace WebApp_Sorteo.Controllers
             return View(sorteo);
         }
 
-        // GET: Sorteos/Create
         public IActionResult Create()
         {
             ViewData["PremioId"] = new SelectList(_context.Premios, "Id", "Descripcion");
             return View();
         }
 
-        // POST: Sorteos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Sorteo sorteo)
@@ -67,7 +58,9 @@ namespace WebApp_Sorteo.Controllers
                         SorteoId = sorteo.Id,
                         NumeroTicket = i,
                         UsuarioId = _context.Usuarios.FirstOrDefaultAsync().Result!.Id,
-                        PrecioTicket = sorteo.PrecioUnidad
+                        PrecioTicket = sorteo.PrecioUnidad,
+                        FechaCompra = DateTime.Now,
+
                     };
                     await _context.Tickets.AddAsync(ticket);
                     await _context.SaveChangesAsync();
@@ -77,9 +70,7 @@ namespace WebApp_Sorteo.Controllers
             ViewData["PremioId"] = new SelectList(_context.Premios, "Id", "Descripcion", sorteo.PremioId);
             return View(sorteo);
         }
-        
 
-        // GET: Sorteos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,9 +87,6 @@ namespace WebApp_Sorteo.Controllers
             return View(sorteo);
         }
 
-        // POST: Sorteos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Sorteo sorteo)
