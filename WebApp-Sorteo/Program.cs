@@ -1,26 +1,29 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using WebApp_Sorteo.Data;
 using WebApp_Sorteo.Data.Inicializador;
+using WebApp_Sorteo.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddAuthorization();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequireNonAlphanumeric = true;
-}).AddDefaultTokenProviders()
-   .AddEntityFrameworkStores<ApplicationDbContext>();
+}).AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultUI()
+    .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -37,9 +40,14 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 8;
     options.Password.RequiredUniqueChars = 2;
+    options.Password.RequireDigit = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Lockout.MaxFailedAccessAttempts = 3;
+    options.User.RequireUniqueEmail = true;
 });
 
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddRazorPages();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(x =>
@@ -48,13 +56,9 @@ builder.Services.AddSession(x =>
     x.Cookie.HttpOnly = true;
     x.Cookie.IsEssential = true;
 });
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = $"/Identity/Account/Login";
-    options.LogoutPath = $"/Identity/Account/Logout";
-    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-});
 
+//*Services
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IDbInicializador, DbInicializador>();
 
 var app = builder.Build();
@@ -75,6 +79,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
@@ -84,7 +89,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var inicializador = services.GetRequiredService<IDbInicializador>();
-        await inicializador.MontarBaseDatos();
+        inicializador.MontarBaseDatos();
     }
     catch (Exception ex)
     {
