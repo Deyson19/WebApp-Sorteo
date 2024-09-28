@@ -8,6 +8,7 @@ namespace WebApp_Sorteo.Models
         [Key]
         public int Id { get; set; }
         public int NumeroTicket { get; set; }
+        public EstadoTicket EstadoTicket { get; set; }
         public DateTime FechaCompra { get; set; }
         public EstadoPago EstadoPago { get; set; }
         public decimal MontoPagado { get; set; }
