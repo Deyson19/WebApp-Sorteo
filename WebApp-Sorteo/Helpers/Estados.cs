@@ -6,6 +6,11 @@
         Pagado,
         Cancelado
     }
+    public enum EstadoTicket
+    {
+        Activo,
+        Inactivo
+    }
 
     public enum EstadoSorteo
     {
