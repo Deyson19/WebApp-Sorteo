@@ -40,7 +40,10 @@ namespace WebApp_Sorteo.Data.Inicializador
                 Ciudad = "Bogota",
                 Estado = "Bogota",
                 Pais = "Colombia",
-                Documento = "24257896"
+                Documento = "24257896",
+                PhoneNumber = "1234567890",
+                PhoneNumberConfirmed = true,
+                LockoutEnabled = false,
 
             }, "Admin.dey_20").GetAwaiter().GetResult();
 
