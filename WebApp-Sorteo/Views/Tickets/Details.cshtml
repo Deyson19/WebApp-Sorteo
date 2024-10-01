@@ -50,8 +50,9 @@
                 </dd>
             </div>
         </div>
-        <div class="card-footer text-end">
+        <div class="card-footer text-end justify-content-between">
             <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Editar</a>
+            <a asp-action="Elegir" asp-route-id="@Model?.Id" class="btn btn-info">Pagar</a>
             <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
         </div>
     </div>
