@@ -4,12 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-primary text-uppercase text-center">Listado de Sorteos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-light">Crear Nuevo
+        <i class="fas fa-plus-circle"></i></a>
+    </a>
 </p>
-<table class="table">
+<table class="table" id="tblDatos">
     <thead>
         <tr>
             <th>
@@ -19,19 +21,13 @@
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaFin)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CantidadTicketsTotales)
+                Tickets Totales
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CantidadTicketsVendidos)
+                Tickets Vendidos
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PrecioUnidad)
@@ -39,7 +35,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Premio)
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -53,12 +49,6 @@
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FechaInicio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaFin)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
@@ -66,17 +56,25 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CantidadTicketsVendidos)
-                </td> 
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PrecioUnidad)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Premio.Descripcion)
+                    <img src="@Html.DisplayFor(modelItem => item.Premio!.Imagen)" class="img-fluid rounded-top"
+                        alt="Imagen del premio" />
+
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <td class="d-flex justify-content-around my-5">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info m-2">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success m-2">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger m-2">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
                 </td>
             </tr>
         }
