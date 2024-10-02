@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using WebApp_Sorteo.Data;
 using WebApp_Sorteo.Data.Inicializador;
 using WebApp_Sorteo.Helpers;
+using WebApp_Sorteo.Services.Contract;
+using WebApp_Sorteo.Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,9 +60,9 @@ builder.Services.AddSession(x =>
 });
 
 //*Services
+builder.Services.AddTransient<IMercadoPagoService, MercadoPagoService>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IDbInicializador, DbInicializador>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -88,8 +90,8 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        var inicializador = services.GetRequiredService<IDbInicializador>();
-        inicializador.MontarBaseDatos();
+        var inicializar = services.GetRequiredService<IDbInicializador>();
+        inicializar.MontarBaseDatos();
     }
     catch (Exception ex)
     {
