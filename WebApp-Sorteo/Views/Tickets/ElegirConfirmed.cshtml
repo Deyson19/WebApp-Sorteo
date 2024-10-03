@@ -1,0 +1,85 @@
+@model int
+@{
+    ViewData["Title"] = "Completar Datos";
+}
+
+<div class="text-center shadow-lg border-2 bg-dark">
+    <h1 class="display-4 text-primary text-center">Por favor completa tus datos para pagar.</h1>
+    <form method="post" autocomplete="on">
+        <input type="hidden" name="id" id="ticketId" value="@Model">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="card shadow-lg border-2">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="phoneAreaCode" class="form-label">PhoneAreaCode</label>
+                            <input name="PhoneAreaCode" value="025" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="form-label">PhoneNumber</label>
+                            <input name="PhoneNumber" value="+573196670987" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="rol">
+                        <div class="form-group">
+                            <label class="form-label"></label>
+                            <select name="PersonType" class="form-select">
+                                <option value="Natural">Natural</option>
+                                <option value="Juridica">Jurídica</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="rol">
+                        <div class="form-group">
+                            <label class="form-label"></label>
+                            <select name="IdentificationType" class="form-select">
+                                <option value="CC">C.C</option>
+                                <option value="CE">C.E</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="rol">
+                        <div class="form-group">
+                            <label name="IdentificationNumber" class="form-label"></label>
+                            <input name="IdentificationNumber" value="123456789" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <br>
+                    <button asp-action="Pagar" type="submit" class="btn btn-success btn-block">
+                        Pagar
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+
+    <script>
+        const txtticketId = document.getElementById("ticketId");
+        if (!txtticketId.value) {
+            Swal.fire({
+                title: 'Error',
+                text: 'No se ha seleccionado un ticket',
+                icon: 'error',
+            })
+            setTimeout(() => {
+                //window.location.href = "/Home/Index";
+                console.log(txtticketId);
+            }, 1800)
+        }
+    </script>
+
+}
