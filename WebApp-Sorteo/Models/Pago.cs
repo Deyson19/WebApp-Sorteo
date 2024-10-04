@@ -16,6 +16,7 @@ namespace WebApp_Sorteo.Models
         public required string MetodoPago { get; set; }
         public EstadoPago EstadoPago { get; set; }
         public required string DetallesPago { get; set; }
+        public string PrefId { get; set; }
 
     }
 }
