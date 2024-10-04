@@ -19,7 +19,6 @@
 
 }
 
-<h1>Index</h1>
 <style>
     .custom-ticket {
         border: 2px solid #007bff;
@@ -34,18 +33,18 @@
         /* Para evitar que el ícono sobresalga */
     }
 
-        .custom-ticket::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 50px;
-            height: 50px;
-            background-color: #007bff;
-            /* Color del ticket */
-            border-radius: 50%;
-            /* Hacerlo circular */
-        }
+    .custom-ticket::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50px;
+        height: 50px;
+        background-color: #007bff;
+        /* Color del ticket */
+        border-radius: 50%;
+        /* Hacerlo circular */
+    }
 
     .card-title {
         font-weight: bold;
@@ -58,15 +57,34 @@
     }
 </style>
 <div class="container mt-4">
-    <h1 class="text-center">Lista de Tickets</h1>
+    <h1 class="text-center text-capitalize text-primary">Listado de Tickets</h1>
+    <h3 class="text-info text-center">Total Registros: @ViewData["TotalRegistros"]</h3>
+    <section class="container-fluid mx-auto my-3 shadow-lg">
+        <div class="row mx-auto my-3">
+            <form asp-action="Index" method="get">
+                <div class="col-lg-4 col-md-4 col-sm-4 d-flex">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar un numero..."
+                            aria-label="Buscar un numero" name="busqueda" value="@ViewData["BusquedaActual"]"
+                            aria-describedby="button-addon2" />
+                        <button class="btn btn-outline-success" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <partial name="_Pagination" />
+    </section>
+
     <div class="row">
         @foreach (var ticket in Model)
         {
 
             <div class="col-md-4 mb-4">
-                <div class="card custom-ticket" style="@applyStyle(ticket.EstadoPago)">
+                <div class="card custom-ticket bg-gradient" style="@applyStyle(ticket.EstadoPago)">
                     <div class="card-body">
-                        <h5 class="card-title">@ticket.NumeroTicket</h5>
+                        <h5 class="card-title">#@ticket.NumeroTicket</h5>
                         <h6 class="card-title">$ - @ticket.PrecioTicket</h6>
                         <p class="card-text">@ticket.Sorteo!.Nombre</p>
                         <div class="d-flex justify-content-between align-items-center">
@@ -90,4 +108,5 @@
             </div>
         }
     </div>
+    <partial name="_Pagination" />
 </div>
