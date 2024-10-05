@@ -6,7 +6,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
                 Hola, @User.Identity?.Name!
             </a>
@@ -14,7 +14,7 @@
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
                 asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-outline-danger text-dark" id="btnLogout">
+                <button type="submit" class="nav-link btn btn-outline-danger " id="btnLogout">
                     Logout
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
@@ -24,13 +24,13 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">
+            <a class="nav-link " asp-area="Identity" asp-page="/Account/Register">
                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                 Register
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
                 Login
                 <i class="fa-solid fa-right-to-bracket"></i>
             </a>
