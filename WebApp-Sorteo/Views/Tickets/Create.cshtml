@@ -1,12 +1,12 @@
 ﻿@model WebApp_Sorteo.Models.Ticket
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear un Ticket";
 }
 
-<h1>Create</h1>
+<h1 class="text-center text-primary">Crear un Ticket</h1>
 
-<h4>Ticket</h4>
+<h4 class="text-info">Agregar detalles del ticket</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -34,11 +34,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="SorteoId" class="control-label"></label>
-                <select asp-for="SorteoId" class ="form-control" asp-items="ViewBag.SorteoId"></select>
+                <select asp-for="SorteoId" class="form-control" asp-items="ViewBag.SorteoId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="UsuarioId" class="control-label"></label>
-                <select asp-for="UsuarioId" class ="form-control" asp-items="ViewBag.UsuarioId"></select>
+                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -48,9 +48,34 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-primary" id="btnRegresar">
+        <i class="fas fa-arrow-left"></i> Regresar a la lista
+    </a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        const btnRegresar = document.getElementById("btnRegresar");
+        btnRegresar.addEventListener("click", function () {
+            Swal.fire({
+                title: "¿Desea regresar a la lista de tickets?",
+                text: "Al hacer clic en 'Aceptar', se cerrará la ventana actual y se regresa al listado",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No, cancelar',
+            }).then((x) => {
+                if (x.isConfirmed) {
+                    window.location.href = '@Url.Action("Index", "Tickets")';
+                } else {
+                    console.log("No se regresará");
+                }
+            })
+        })
+    </script>
 }
