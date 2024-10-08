@@ -57,10 +57,10 @@ $(document).ready(function () {
       iconTheme.classList.add(...themeDarkClass);
       localStorage.setItem("theme", "dark");
     }
-    toastr.success("Se ha cambiado el tema");
 
     setTimeout(() => {
       window.location.reload();
-    }, 100);
+    }, 1500);
+    toastr.success("Se ha cambiado el tema");
   }
 });
