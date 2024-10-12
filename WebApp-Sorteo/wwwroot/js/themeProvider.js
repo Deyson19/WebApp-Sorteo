@@ -1,19 +1,5 @@
-const themeLightClass = [
-  "fa",
-  "fa-solid",
-  "fa-moon",
-  "fa-lg",
-  "fa-beat",
-  "btn-dark",
-];
-const themeDarkClass = [
-  "fa",
-  "fa-regular",
-  "fa-sun",
-  "fa-lg",
-  "fa-beat",
-  "btn-light",
-];
+const themeLightClass = ["fa", "fa-solid", "fa-moon", "fa-lg", "btn-dark"];
+const themeDarkClass = ["fa", "fa-regular", "fa-sun", "fa-lg", "btn-light"];
 
 $(document).ready(function () {
   const myCurrentTheme = localStorage.getItem("theme");
