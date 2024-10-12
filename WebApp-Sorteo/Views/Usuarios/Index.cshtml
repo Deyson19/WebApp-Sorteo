@@ -17,9 +17,9 @@
     </div>
 </div>
 <hr>
-<div class="p-2 border rounded bg-light">
+<div class="p-2 border rounded text-center">
     <table id="tblDatos" class="table table-responsive table-hover">
-        <thead class="table-dark">
+        <thead class="table-success">
             <tr>
                 <th>Email</th>
                 <th>Nombres</th>
@@ -59,8 +59,7 @@
                         @if ((item.LockoutEnd > DateTime.UtcNow) || (item.LockoutEnd > DateTime.Now))
                         {
                             <div class="text-center">
-                                <button onclick=LockUnlock('@item.Id') class="btn btn-sm btn-success text-white"
-                                    style="cursor:pointer">
+                                <button onclick=LockUnlock('@item.Id') class="btn btn-sm btn-success" style="cursor:pointer">
                                     <i class="fa-solid fa-lock-open"></i> Desbloquear
                                 </button>
                             </div>
@@ -68,8 +67,7 @@
                         else
                         {
                             <div class="text-center">
-                                <button onclick=LockUnlock('@item.Id') class="btn btn-sm btn-danger text-white"
-                                    style="cursor:pointer">
+                                <button onclick=LockUnlock('@item.Id') class="btn btn-sm btn-danger" style="cursor:pointer">
                                     <i class="fa-solid fa-lock"></i> Bloquear
                                 </button>
                             </div>
@@ -83,18 +81,6 @@
 
 @section Scripts {
     <script>
-        const table = new DataTable('#tblDatos',
-            {
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                },
-                "aLengthMenu": [
-                    [15, 50, 100, 200, -1],
-                    [15, 50, 100, 200, "Todos"]
-                ]
-            });
-
-
         function LockUnlock(id) {
             if (id) {
                 //*confirmar bloqueo swal
