@@ -1,135 +1,137 @@
 @model IEnumerable<WebApp_Sorteo.Models.Usuario>
 @{
-    ViewData["Title"] = "Usuarios";
+     ViewData["Title"] = "Usuarios";
 }
 <div class="row">
-    <div class="col-lg-6">
-        <h2 class="text-primary">
-            Listado de Usuarios
-        </h2>
-    </div>
-    <div class="col-lg-6">
+     <div class="col-lg-6">
+          <h2 class="text-primary">
+               Listado de Usuarios
+          </h2>
+     </div>
+     <div class="col-lg-6">
 
-        <a class="btn btn-outline-primary" asp-area="Identity" asp-page="/Account/Register">
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
-            Crear Usuario
-        </a>
-    </div>
+          <a class="btn btn-outline-primary" asp-area="Identity" asp-page="/Account/Register">
+               <i class="fa fa-user-circle" aria-hidden="true"></i>
+               Crear Usuario
+          </a>
+     </div>
 </div>
 <hr>
-<div class="p-2 border rounded text-center">
-    <table id="tblDatos" class="table table-responsive table-hover">
-        <thead class="table-success">
-            <tr>
-                <th>Email</th>
-                <th>Nombres</th>
-                <th>Documento</th>
-                <th>Pais</th>
-                <th>Ciudad</th>
-                <th>Rol</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
+<div class="p-2 border rounded text-center text-secondary">
+     <table id="tblDatos" class="table table-responsive table-hover">
+          <thead class="table-success">
+               <tr>
+                    <th>Email</th>
+                    <th>Nombres</th>
+                    <th>Documento</th>
+                    <th>Pais</th>
+                    <th>Ciudad</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+               </tr>
+          </thead>
 
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombres)
+          <tbody>
+               @foreach (var item in Model)
+               {
+                    <tr>
+                         <td>
+                              @Html.DisplayFor(modelItem => item.Email)
+                         </td>
+                         <td>
+                              @Html.DisplayFor(modelItem => item.Nombres)
 
-                        @Html.DisplayFor(modelItem => item.Apellidos)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Documento)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pais)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ciudad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Role)
-                    </td>
-                    <td>
-                        @if ((item.LockoutEnd > DateTime.UtcNow) || (item.LockoutEnd > DateTime.Now))
-                        {
-                            <div class="text-center">
-                                <button onclick=LockUnlock('@item.Id') class="btn btn-sm btn-success" style="cursor:pointer">
-                                    <i class="fa-solid fa-lock-open"></i> Desbloquear
-                                </button>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="text-center">
-                                <button onclick=LockUnlock('@item.Id') class="btn btn-sm btn-danger" style="cursor:pointer">
-                                    <i class="fa-solid fa-lock"></i> Bloquear
-                                </button>
-                            </div>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                              @Html.DisplayFor(modelItem => item.Apellidos)
+                         </td>
+                         <td>
+                              @Html.DisplayFor(modelItem => item.Documento)
+                         </td>
+                         <td>
+                              @Html.DisplayFor(modelItem => item.Pais)
+                         </td>
+                         <td>
+                              @Html.DisplayFor(modelItem => item.Ciudad)
+                         </td>
+                         <td>
+                              @Html.DisplayFor(modelItem => item.Role)
+                         </td>
+                         <td>
+                              @if ((item.LockoutEnd > DateTime.UtcNow) || (item.LockoutEnd > DateTime.Now))
+                              {
+                                   <div class="text-center">
+                                        <button onclick=LockUnlock('@item.Id') class="btn btn-sm btn-success"
+                                             style="cursor:pointer">
+                                             <i class="fa-solid fa-lock-open"></i> Desbloquear
+                                        </button>
+                                   </div>
+                              }
+                              else
+                              {
+                                   <div class="text-center">
+                                        <button onclick=LockUnlock('@item.Id') class="btn btn-sm btn-danger"
+                                             style="cursor:pointer">
+                                             <i class="fa-solid fa-lock"></i> Bloquear
+                                        </button>
+                                   </div>
+                              }
+                         </td>
+                    </tr>
+               }
+          </tbody>
+     </table>
 </div>
 
 @section Scripts {
-    <script>
-        function LockUnlock(id) {
-            if (id) {
-                //*confirmar bloqueo swal
-                Swal.fire({
-                    title: "¿Esta seguro la operación?",
-                    text: "Esta acción no se puede deshacer",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si',
-                    cancelButtonText: 'No, cancelar',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/Usuarios/LockUnlock",
-                            data: JSON.stringify(id),
-                            contentType: "application/json; charset=utf-8",
-                            success: function (data) {
-                                if (data.success) {
-                                    toastr.success(data.message);
-                                    table.ajax.reload();
-                                } else {
-                                    showErrorMessage(data.message);
-                                    table.ajax.reload();
-                                }
-                            },
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "Operación cancelada",
-                            text: "No se realizo ninguna accion",
-                            icon: 'info',
-                        });
-                    }
-                });
-            } else {
-                toastr.error("No se selecciono ningun registro");
-            }
+     <script>
+          function LockUnlock(id) {
+               if (id) {
+                    //*confirmar bloqueo swal
+                    Swal.fire({
+                         title: "¿Esta seguro la operación?",
+                         text: "Esta acción no se puede deshacer",
+                         icon: 'warning',
+                         showCancelButton: true,
+                         confirmButtonColor: '#3085d6',
+                         cancelButtonColor: '#d33',
+                         confirmButtonText: 'Si',
+                         cancelButtonText: 'No, cancelar',
+                    }).then((result) => {
+                         if (result.isConfirmed) {
+                              $.ajax({
+                                   type: "POST",
+                                   url: "/Usuarios/LockUnlock",
+                                   data: JSON.stringify(id),
+                                   contentType: "application/json; charset=utf-8",
+                                   success: function (data) {
+                                        if (data.success) {
+                                             toastr.success(data.message);
+                                             table.ajax.reload();
+                                        } else {
+                                             showErrorMessage(data.message);
+                                             table.ajax.reload();
+                                        }
+                                   },
+                              });
+                         } else {
+                              Swal.fire({
+                                   title: "Operación cancelada",
+                                   text: "No se realizo ninguna accion",
+                                   icon: 'info',
+                              });
+                         }
+                    });
+               } else {
+                    toastr.error("No se selecciono ningun registro");
+               }
 
-        }
+          }
 
-        function showErrorMessage(message) {
-            Swal.fire({
-                title: "Error",
-                text: message,
-                icon: 'error',
-            })
-        }
-    </script>
+          function showErrorMessage(message) {
+               Swal.fire({
+                    title: "Error",
+                    text: message,
+                    icon: 'error',
+               })
+          }
+     </script>
 }
