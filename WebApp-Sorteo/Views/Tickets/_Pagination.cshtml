@@ -1,24 +1,25 @@
-<div class="card-footer text-center shadow-lg border-4 border-info bg-gradient">
-    <a asp-action="Index" asp-route-pageNumber="@(1)" asp-asp-route-busquedaActual="@ViewData["BusquedaActual"]"
-        class="btn btn-outline-primary">
-        <i class="fa-solid fa-caret-left"></i>
-    </a>
-    <a asp-action="Index" asp-asp-route-busquedaActual="@ViewData["BusquedaActual"]"
-        asp-route-pageNumber="@((int)ViewData["PageNumber"]-1)" class="btn btn-outline-primary @ViewData["Previo"]">
-        <i class="fa-solid fa-backward-fast "></i>
-        Anterior
-    </a>
+<div class="card-footer text-center shadow-lg border-4 border-info bg-gradient text-secondary">
+     <a asp-action="Index" asp-route-pageNumber="@(1)" asp-asp-route-busquedaActual="@ViewData["BusquedaActual"]"
+          class="btn btn-outline-primary">
+          <i class="fa-solid fa-caret-left"></i>
+     </a>
+     <a asp-action="Index" asp-asp-route-busquedaActual="@ViewData["BusquedaActual"]"
+          asp-route-pageNumber="@((int)ViewData["PageNumber"]-1)" class="btn btn-outline-primary @ViewData["Previo"]">
+          <i class="fa-solid fa-backward-fast "></i>
+          Anterior
+     </a>
 
-    <span>Página @ViewData["PageNumber"] de @ViewData["TotalPaginas"]</span>
+     <span>Página @ViewData["PageNumber"] de @ViewData["TotalPaginas"]</span>
 
-    <a asp-action="Index" asp-asp-route-busquedaActual="@ViewData["BusquedaActual"]"
-        asp-route-pageNumber="@((int)ViewData["PageNumber"]+1)" class="btn btn-outline-primary @ViewData["Siguiente"]">
-        Siguiente
-        <i class="fa-solid fa-forward-fast"></i>
-    </a>
+     <a asp-action="Index" asp-asp-route-busquedaActual="@ViewData["BusquedaActual"]"
+          asp-route-pageNumber="@((int)ViewData["PageNumber"]+1)"
+          class="btn btn-outline-primary @ViewData["Siguiente"]">
+          Siguiente
+          <i class="fa-solid fa-forward-fast"></i>
+     </a>
 
-    <a asp-action="Index" asp-route-pageNumber="@ViewData["TotalPaginas"]"
-        asp-asp-route-busquedaActual="@ViewData["BusquedaActual"]" class="btn btn-outline-primary">
-        <i class="fa-solid fa-caret-right"></i>
-    </a>
+     <a asp-action="Index" asp-route-pageNumber="@ViewData["TotalPaginas"]"
+          asp-asp-route-busquedaActual="@ViewData["BusquedaActual"]" class="btn btn-outline-primary">
+          <i class="fa-solid fa-caret-right"></i>
+     </a>
 </div>
