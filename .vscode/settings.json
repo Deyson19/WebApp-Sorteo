@@ -1,7 +1,5 @@
 {
-    "cSpell.language": "en,es-ES,es",
-    "cSpell.enableFiletypes": [
-        "razor",
-        "vue-html"
-    ]
+  "cSpell.language": "en,es-ES,es",
+  "cSpell.enableFiletypes": ["razor", "vue-html"],
+  "cSpell.words": ["Metodo"]
 }
